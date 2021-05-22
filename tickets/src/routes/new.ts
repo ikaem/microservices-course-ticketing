@@ -26,8 +26,6 @@ router.post(
   async (req: Request, res: Response) => {
     const { title, price } = req.body;
 
-    console.log('title in the create ticket route', title);
-
     const ticket = Ticket.build({
       title,
       price,
