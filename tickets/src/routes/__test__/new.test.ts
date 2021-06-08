@@ -3,6 +3,9 @@ import request from 'supertest';
 
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
+import { natsWrapper } from '../../nats-wrapper';
+
+// jest.mock('../../nats-wrapper');
 
 it('has a route handler listening to /api/tickets for post requests', async () => {
   const response = await request(app).post('/api/tickets').send({});
@@ -56,4 +59,18 @@ it('creates a ticket with valid inputs', async () => {
 
   tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
+});
+
+it('publishes an event', async () => {
+  // we want to create a ticket
+
+  await request(app)
+    .post('/api/tickets')
+    .set('Cookie', global.signup())
+    .send({ title: 'title', price: 20 })
+    .expect(201);
+
+  // and then check if publish was invoked before
+  console.log('nats wrapper', natsWrapper);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

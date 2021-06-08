@@ -6,12 +6,16 @@ import { natsWrapper } from './nats-wrapper';
 const start = async () => {
   if (!process.env.JWT_KEY) throw new Error('No hash secret present');
   if (!process.env.MONGO_URI) throw new Error('No database URI present');
+  if (!process.env.NATS_CLIENT_ID) throw new Error('No NATS CLIENT ID present');
+  if (!process.env.NATS_URL) throw new Error('No NATS URL present');
+  if (!process.env.NATS_CLUSTER_ID)
+    throw new Error('No NATS_CLUSTER_ID present');
 
   try {
     await natsWrapper.connect(
-      'ticketing',
-      'someserviceid',
-      'http://nats-srv:4222'
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL
     );
 
     natsWrapper.client.on('close', () => {
