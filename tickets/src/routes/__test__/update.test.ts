@@ -90,3 +90,26 @@ it('publishes an event when ticket updated', async () => {
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
+
+it('rejects updates if the ticket is reserved', async () => {
+  const cookie = global.signup();
+  const response = await request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookie)
+    .send({ title: 'some title', price: 20 });
+
+  // TODO here, we will have to set order if on the test
+
+  const ticket = await Ticket.findById(response.body.id);
+  if (!ticket) throw new Error('No such ticket');
+
+  ticket.set({ orderId: mongoose.Types.ObjectId().toHexString() });
+
+  await ticket.save();
+
+  await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set('Cookie', cookie)
+    .send({ price: 100, title: 'what' })
+    .expect(400);
+});

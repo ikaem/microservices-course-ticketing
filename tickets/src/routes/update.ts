@@ -1,4 +1,5 @@
 import {
+  BadRequestError,
   currentUser,
   NotAuthorizedError,
   NotFoundError,
@@ -29,6 +30,8 @@ router.put(
     if (!ticket) throw new NotFoundError();
 
     if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError();
+
+    if (ticket.orderId) throw new BadRequestError('Ticket is already reserved');
 
     ticket.set({
       title: req.body.title,
