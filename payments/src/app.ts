@@ -3,7 +3,7 @@ import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
 import { errorHandler } from '@angrychaired/common';
-// import { router } from './routes';
+import { router } from './routes';
 
 const app = express();
 app.set('trust proxy', true);
@@ -14,7 +14,7 @@ app.use(
     secure: process.env.NODE_ENV !== 'test',
   })
 );
-// app.use(router);
+app.use(router);
 app.use(errorHandler);
 
 export { app };

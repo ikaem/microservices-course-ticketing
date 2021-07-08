@@ -1,0 +1,10 @@
+import Stripe from 'stripe';
+
+// payments\src\__mocks__\stripe.ts
+
+export const stripe: Stripe = {
+  // @ts-ignore
+  charges: {
+    // create: jest.fn().mockResolvedValue({}),
+  },
+};

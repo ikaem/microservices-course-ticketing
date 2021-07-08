@@ -1,3 +1,5 @@
+// payments\src\test\setup.ts
+
 import { sign } from 'jsonwebtoken';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
@@ -9,12 +11,15 @@ declare global {
   namespace NodeJS {
     interface Global {
       // TODO someting here
-      signup: () => string[];
+      signup: (orderId?: string) => string[];
     }
   }
 }
 
 jest.mock('../nats-wrapper');
+
+process.env.STRIPE_KEY =
+  'sk_test_51JAIoQBmBwN2aPYS5cKAa9phi9fbjBoUPQJRmcC3we83B1XBB5FdD9efEVphjj5UaExjUpD5KFIHCvqVofO3ra5n00mvUrI9dh';
 
 let mongo: MongoMemoryServer;
 
@@ -42,10 +47,11 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-(global as NodeJS.Global & typeof globalThis).signup = () => {
+(global as any).signup = (orderId?: string) => {
+  console.log({ orderId });
   // build a jwt payload {id, email}
   const payload = {
-    id: mongoose.Types.ObjectId().toHexString(),
+    id: orderId || mongoose.Types.ObjectId().toHexString(),
     email: 'some@ema.il',
   };
   // create the jwt
