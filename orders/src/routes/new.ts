@@ -20,7 +20,7 @@ const router = express.Router();
 
 // TODO old
 // const EXPIRATION_WINDOW_SECONDS = 15 * 60;
-const EXPIRATION_WINDOW_SECONDS = 15 * 60;
+const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 
 router.post(
   '/api/orders',
