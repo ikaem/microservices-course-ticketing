@@ -7,10 +7,11 @@ export const useRequest = ({ url, method, body, onSuccess }) => {
 
   console.log('method', method);
 
-  const doRequest = async () => {
+  const doRequest = async (props = {}) => {
     setErrors(null);
+    console.log('this', { ...body, ...props });
     try {
-      const response = await axios[method](url, body);
+      const response = await axios[method](url, { ...body, ...props });
       if (onSuccess) onSuccess(response.data);
 
       return response.data;
@@ -20,10 +21,11 @@ export const useRequest = ({ url, method, body, onSuccess }) => {
         <div className='alert alert-danger'>
           <h4>Ooops...</h4>
           <ul className='my-0'>
-            {err.response.data.errors.map((err) => (
+            {err.response?.data.errors.map((err) => (
               <li key={err.message}>{err.message}</li>
             ))}
           </ul>
+          {errors}
         </div>
       );
     }
