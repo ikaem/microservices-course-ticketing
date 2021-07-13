@@ -17,14 +17,14 @@ export const stripe = new Stripe(process.env.STRIPE_KEY as string, {
 //   });
 // };
 
-const schedule = async () => {
-  const customer = await stripe.customers.create({
-    payment_method: 'hello',
-  });
-  const subscription = await stripe.subscriptionSchedules.create({
-    default_settings: {},
-  });
-};
+// const schedule = async () => {
+//   const customer = await stripe.customers.create({
+//     payment_method: 'hello',
+//   });
+//   const subscription = await stripe.subscriptionSchedules.create({
+//     default_settings: {},
+//   });
+// };
 
 // const createSubscription = async () => {
 //   const customer = await stripe.customers.create({
