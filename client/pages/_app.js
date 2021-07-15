@@ -5,7 +5,7 @@ import { buildClient } from '../api/build-client';
 import { Header } from '../components/header';
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
-  console.log('page props', pageProps);
+  // console.log('page props', pageProps);
   return (
     <div>
       <Header currentUser={currentUser} />
