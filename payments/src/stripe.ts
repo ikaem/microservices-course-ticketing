@@ -6,6 +6,26 @@ export const stripe = new Stripe(process.env.STRIPE_KEY as string, {
   apiVersion: '2020-08-27',
 });
 
+// const createSubscriptionSession = async () => {
+//   const session = await stripe.checkout.sessions.create({
+//     success_url: 'https://example.com/success',
+//     cancel_url: 'https://example.com/cancel',
+//     payment_method_types: ['card'],
+//     // line_items: [{ price: 'price_H5ggYwtDq4fbrJ', quantity: 2 }]
+//     mode: "subscription",
+
+//   });
+// };
+
+// const schedule = async () => {
+//   const customer = await stripe.customers.create({
+//     payment_method: 'hello',
+//   });
+//   const subscription = await stripe.subscriptionSchedules.create({
+//     default_settings: {},
+//   });
+// };
+
 // const createSubscription = async () => {
 //   const customer = await stripe.customers.create({
 //     email: 'test@test.com', // tjhis will add the customer to stripe account i gusess
