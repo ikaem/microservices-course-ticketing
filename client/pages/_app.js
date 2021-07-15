@@ -17,6 +17,8 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 };
 
 AppComponent.getInitialProps = async (appContext) => {
+  console.log('starting up');
+
   const { Component, ctx } = appContext;
   const client = buildClient(ctx);
 
